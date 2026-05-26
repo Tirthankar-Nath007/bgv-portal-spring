@@ -1,2 +1,3 @@
 -- Baseline migration: all BGV tables already exist in the database.
 -- Future schema changes go in V2__..., V3__..., etc.
+

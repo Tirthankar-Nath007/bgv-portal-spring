@@ -48,18 +48,6 @@ public class VerificationServiceImpl implements VerificationService {
     private final ObjectMapper objectMapper;
     private final AppProperties appProperties;
 
-    public VerificationServiceImpl(EmployeeRepository employeeRepository, VerificationRecordRepository verificationRecordRepository, VerificationAttemptRepository verificationAttemptRepository, VerifierRepository verifierRepository, ComparisonService comparisonService, SequenceService sequenceService, EmailService emailService, ObjectMapper objectMapper, AppProperties appProperties) {
-        this.employeeRepository = employeeRepository;
-        this.verificationRecordRepository = verificationRecordRepository;
-        this.verificationAttemptRepository = verificationAttemptRepository;
-        this.verifierRepository = verifierRepository;
-        this.comparisonService = comparisonService;
-        this.sequenceService = sequenceService;
-        this.emailService = emailService;
-        this.objectMapper = objectMapper;
-        this.appProperties = appProperties;
-    }
-
     @Override
     @Transactional
     public ValidateEmployeeResponse validateEmployee(Long verifierId, ValidateEmployeeRequest req) {

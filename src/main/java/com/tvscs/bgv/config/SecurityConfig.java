@@ -38,14 +38,6 @@ public class SecurityConfig {
     private final CustomAccessDeniedHandler accessDeniedHandler;
     private final AppProperties appProperties;
 
-    public SecurityConfig(JwtFilter jwtFilter, BgvUserDetailsService userDetailsService, CustomAuthenticationEntryPoint authEntryPoint, CustomAccessDeniedHandler accessDeniedHandler, AppProperties appProperties) {
-        this.jwtFilter = jwtFilter;
-        this.userDetailsService = userDetailsService;
-        this.authEntryPoint = authEntryPoint;
-        this.accessDeniedHandler = accessDeniedHandler;
-        this.appProperties = appProperties;
-    }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http

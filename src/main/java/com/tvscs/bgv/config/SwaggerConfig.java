@@ -18,10 +18,6 @@ public class SwaggerConfig {
 
     private final AppProperties appProperties;
 
-    public SwaggerConfig(AppProperties appProperties) {
-        this.appProperties = appProperties;
-    }
-
     @Bean
     public OpenAPI bgvOpenAPI() {
         return new OpenAPI()

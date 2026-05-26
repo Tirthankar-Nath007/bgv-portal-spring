@@ -1,0 +1,9 @@
+-- Optional: Create Oracle sequences for BGV_VER_SEQ and BGV_APP_SEQ.
+-- The application falls back to MAX(id)+1 if sequences are absent,
+-- so sequences are optional but recommended for concurrent environments.
+--
+-- To use, run manually in SQL*Plus or SQLcl:
+--   CREATE SEQUENCE BGV_VER_SEQ START WITH <max+1> INCREMENT BY 1 NOCACHE NOCYCLE;
+--   CREATE SEQUENCE BGV_APP_SEQ START WITH <max+1> INCREMENT BY 1 NOCACHE NOCYCLE;
+--
+-- This file is intentionally a no-op so Flyway records it without executing DDL.

@@ -21,7 +21,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,13 +32,6 @@ public class VerifierAuthServiceImpl implements VerifierAuthService {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AccessLogService accessLogService;
-
-    public VerifierAuthServiceImpl(VerifierRepository verifierRepository, JwtService jwtService, PasswordEncoder passwordEncoder, AccessLogService accessLogService) {
-        this.verifierRepository = verifierRepository;
-        this.jwtService = jwtService;
-        this.passwordEncoder = passwordEncoder;
-        this.accessLogService = accessLogService;
-    }
 
     @Override
     public VerifierProfileResponse register(RegisterVerifierRequest req) {

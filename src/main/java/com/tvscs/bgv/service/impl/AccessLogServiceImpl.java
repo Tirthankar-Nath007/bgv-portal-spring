@@ -17,10 +17,6 @@ public class AccessLogServiceImpl implements AccessLogService {
 
     private final AccessLogRepository accessLogRepository;
 
-    public AccessLogServiceImpl(AccessLogRepository accessLogRepository) {
-        this.accessLogRepository = accessLogRepository;
-    }
-
     @Override
     public void log(String email, String role, String action, String status,
                     String failureReason, HttpServletRequest request) {

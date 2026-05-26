@@ -43,8 +43,7 @@ public class AccessLog {
     @Column(name = "metadata", columnDefinition = "CLOB")
     private String metadata;
 
-    // "timestamp" is a reserved word in Oracle — map it explicitly
     @CreationTimestamp
-    @Column(name = "\"timestamp\"", updatable = false)
+    @Column(name = "timestamp", updatable = false)
     private LocalDateTime timestamp;
 }

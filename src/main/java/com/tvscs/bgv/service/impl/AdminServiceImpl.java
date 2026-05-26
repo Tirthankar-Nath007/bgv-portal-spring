@@ -44,16 +44,6 @@ public class AdminServiceImpl implements AdminService {
     private final AccessLogService accessLogService;
     private final AccessLogRepository accessLogRepository;
 
-    public AdminServiceImpl(VerifierRepository verifierRepository, EmployeeRepository employeeRepository, VerificationRecordRepository verificationRecordRepository, AppealRepository appealRepository, VerificationAttemptRepository verificationAttemptRepository, AccessLogService accessLogService, AccessLogRepository accessLogRepository) {
-        this.verifierRepository = verifierRepository;
-        this.employeeRepository = employeeRepository;
-        this.verificationRecordRepository = verificationRecordRepository;
-        this.appealRepository = appealRepository;
-        this.verificationAttemptRepository = verificationAttemptRepository;
-        this.accessLogService = accessLogService;
-        this.accessLogRepository = accessLogRepository;
-    }
-
     @Override
     public DashboardStatsResponse getDashboard() {
         long totalVerifications = verificationRecordRepository.count();

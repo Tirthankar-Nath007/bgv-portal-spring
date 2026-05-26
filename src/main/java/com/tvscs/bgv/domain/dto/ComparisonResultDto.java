@@ -16,5 +16,5 @@ public class ComparisonResultDto {
     private String companyValue;
     @JsonProperty("isMatch")
     private boolean isMatch;
-    private String matchType; // exact, partial, mismatch, not_provided
+    private String matchType;
 }

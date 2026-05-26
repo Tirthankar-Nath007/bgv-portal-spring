@@ -13,10 +13,6 @@ public class SequenceServiceImpl implements SequenceService {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public SequenceServiceImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
     @Override
     public String nextVerificationId() {
         return generateId("BGV_VER_SEQ", "VER");
@@ -33,11 +29,13 @@ public class SequenceServiceImpl implements SequenceService {
                     "SELECT " + sequenceName + ".NEXTVAL FROM DUAL", Long.class);
             return String.format("%s%06d", prefix, next);
         } catch (Exception e) {
-            // Fallback: use COUNT+1 if sequence doesn't exist
-            log.warn("Sequence {} not found, using count-based fallback: {}", sequenceName, e.getMessage());
+            log.warn("Sequence {} not found, using max-based fallback: {}", sequenceName, e.getMessage());
+            // Use MAX of numeric suffix to avoid collisions when records have been deleted
+            String idColumn = prefix.equals("VER") ? "verification_id" : "appeal_id";
             String table = prefix.equals("VER") ? "BGV_VERIFICATION_RECORDS" : "BGV_APPEALS";
-            Long count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM " + table, Long.class);
-            return String.format("%s%06d", prefix, (count == null ? 0 : count) + 1);
+            String sql = "SELECT NVL(MAX(TO_NUMBER(SUBSTR(" + idColumn + ", " + (prefix.length() + 1) + "))), 0) + 1 FROM " + table;
+            Long next = jdbcTemplate.queryForObject(sql, Long.class);
+            return String.format("%s%06d", prefix, next == null ? 1 : next);
         }
     }
 }

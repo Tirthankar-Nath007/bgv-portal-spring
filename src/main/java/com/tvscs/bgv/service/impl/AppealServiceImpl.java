@@ -18,8 +18,8 @@ import com.tvscs.bgv.security.UserPrincipal;
 import com.tvscs.bgv.service.AppealService;
 import com.tvscs.bgv.service.EmailService;
 import com.tvscs.bgv.service.SequenceService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -31,9 +31,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
-@Slf4j
 public class AppealServiceImpl implements AppealService {
+
+    private static final Logger log = LoggerFactory.getLogger(AppealServiceImpl.class);
 
     private final AppealRepository appealRepository;
     private final VerificationRecordRepository verificationRecordRepository;
@@ -43,7 +43,13 @@ public class AppealServiceImpl implements AppealService {
     private final EmailService emailService;
     private final ObjectMapper objectMapper;
 
-    public AppealServiceImpl(AppealRepository appealRepository, VerificationRecordRepository verificationRecordRepository, VerifierRepository verifierRepository, EmployeeRepository employeeRepository, SequenceService sequenceService, EmailService emailService, ObjectMapper objectMapper) {
+    public AppealServiceImpl(AppealRepository appealRepository,
+                             VerificationRecordRepository verificationRecordRepository,
+                             VerifierRepository verifierRepository,
+                             EmployeeRepository employeeRepository,
+                             SequenceService sequenceService,
+                             EmailService emailService,
+                             ObjectMapper objectMapper) {
         this.appealRepository = appealRepository;
         this.verificationRecordRepository = verificationRecordRepository;
         this.verifierRepository = verifierRepository;

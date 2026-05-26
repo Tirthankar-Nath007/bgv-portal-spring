@@ -24,10 +24,6 @@ public class JwtService {
     // In-memory revoked token store (jti values)
     private final Set<String> revokedTokens = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
-    public JwtService(AppProperties appProperties) {
-        this.appProperties = appProperties;
-    }
-
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(appProperties.getJwt().getSecret().getBytes(StandardCharsets.UTF_8));
     }

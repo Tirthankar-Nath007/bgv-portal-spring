@@ -19,18 +19,15 @@ public class ReportController {
 
     private final PdfService pdfService;
 
-    public ReportController(PdfService pdfService) {
-        this.pdfService = pdfService;
-    }
-
     @GetMapping("/generate")
     @Operation(summary = "Generate a PDF verification report")
     public ResponseEntity<byte[]> generateReport(
             @RequestParam String verificationId,
             @AuthenticationPrincipal UserPrincipal principal) {
-        Long verifierId = principal.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().startsWith("ROLE_ADMIN") || a.getAuthority().contains("HR"))
-                ? null : principal.getId();
+        // Admins (any non-VERIFIER role) can access any report; verifiers only their own
+        boolean isAdmin = principal.getAuthorities().stream()
+                .noneMatch(a -> a.getAuthority().equals("ROLE_VERIFIER"));
+        Long verifierId = isAdmin ? null : principal.getId();
 
         byte[] pdf = pdfService.generateVerificationReport(verificationId, verifierId);
         return ResponseEntity.ok()

@@ -34,14 +34,6 @@ public class AdminAuthServiceImpl implements AdminAuthService {
     private final AccessLogService accessLogService;
     private final ObjectMapper objectMapper;
 
-    public AdminAuthServiceImpl(AdminRepository adminRepository, JwtService jwtService, PasswordEncoder passwordEncoder, AccessLogService accessLogService, ObjectMapper objectMapper) {
-        this.adminRepository = adminRepository;
-        this.jwtService = jwtService;
-        this.passwordEncoder = passwordEncoder;
-        this.accessLogService = accessLogService;
-        this.objectMapper = objectMapper;
-    }
-
     @Override
     public AdminAuthResponse login(AdminLoginRequest req, HttpServletRequest httpReq) {
         Admin admin = adminRepository.findByUsernameIgnoreCase(req.getUsername())

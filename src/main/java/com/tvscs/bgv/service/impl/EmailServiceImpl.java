@@ -12,7 +12,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -23,12 +22,6 @@ public class EmailServiceImpl implements EmailService {
     private final JavaMailSender mailSender;
     private final AdminRepository adminRepository;
     private final AppProperties appProperties;
-
-    public EmailServiceImpl(JavaMailSender mailSender, AdminRepository adminRepository, AppProperties appProperties) {
-        this.mailSender = mailSender;
-        this.adminRepository = adminRepository;
-        this.appProperties = appProperties;
-    }
 
     @Override
     public void sendAppealNotification(Appeal appeal, Verifier verifier) {

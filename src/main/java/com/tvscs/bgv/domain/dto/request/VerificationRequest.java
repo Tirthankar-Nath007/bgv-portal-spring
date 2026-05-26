@@ -17,13 +17,9 @@ public class VerificationRequest {
     private String name;
 
     private String entityName;
-
     private String dateOfJoining;
-
     private String dateOfLeaving;
-
     private String designation;
-
     private String exitReason;
 
     @NotNull(message = "Consent must be provided")

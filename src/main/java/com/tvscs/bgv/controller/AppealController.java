@@ -25,10 +25,6 @@ public class AppealController {
 
     private final AppealService appealService;
 
-    public AppealController(AppealService appealService) {
-        this.appealService = appealService;
-    }
-
     @PostMapping
     @Operation(summary = "Submit an appeal for a verification discrepancy")
     public ResponseEntity<AppealResponse> submit(

@@ -23,7 +23,7 @@ public class DashboardStatsResponse {
     @Builder
     public static class RecentActivity {
         private String id;
-        private String type; // "verification" or "appeal"
+        private String type;
         private String employeeId;
         private String status;
         private String timestamp;

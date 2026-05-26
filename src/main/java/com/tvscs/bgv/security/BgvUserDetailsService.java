@@ -15,11 +15,6 @@ public class BgvUserDetailsService implements UserDetailsService {
     private final VerifierRepository verifierRepository;
     private final AdminRepository adminRepository;
 
-    public BgvUserDetailsService(VerifierRepository verifierRepository, AdminRepository adminRepository) {
-        this.verifierRepository = verifierRepository;
-        this.adminRepository = adminRepository;
-    }
-
     // subject format: "VERIFIER:email" or "ADMIN:username"
     @Override
     public UserDetails loadUserByUsername(String subject) throws UsernameNotFoundException {

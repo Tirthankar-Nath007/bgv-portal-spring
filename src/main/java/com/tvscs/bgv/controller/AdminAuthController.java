@@ -25,10 +25,6 @@ public class AdminAuthController {
 
     private final AdminAuthService adminAuthService;
 
-    public AdminAuthController(AdminAuthService adminAuthService) {
-        this.adminAuthService = adminAuthService;
-    }
-
     @PostMapping("/login")
     @Operation(summary = "Admin login")
     public ResponseEntity<AdminAuthResponse> login(@Valid @RequestBody AdminLoginRequest req,

@@ -24,10 +24,6 @@ public class VerificationController {
 
     private final VerificationService verificationService;
 
-    public VerificationController(VerificationService verificationService) {
-        this.verificationService = verificationService;
-    }
-
     @PostMapping("/validate-employee")
     @Operation(summary = "Validate employee existence before full verification")
     public ResponseEntity<ValidateEmployeeResponse> validateEmployee(

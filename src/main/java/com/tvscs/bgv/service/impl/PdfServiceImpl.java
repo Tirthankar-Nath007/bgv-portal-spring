@@ -40,13 +40,6 @@ public class PdfServiceImpl implements PdfService {
     private static final Color MISMATCH_COLOR = new Color(192, 57, 43);
     private static final Color ROW_EVEN = new Color(245, 248, 245);
 
-    public PdfServiceImpl(VerificationRecordRepository recordRepository, VerifierRepository verifierRepository, EmployeeRepository employeeRepository, ObjectMapper objectMapper) {
-        this.recordRepository = recordRepository;
-        this.verifierRepository = verifierRepository;
-        this.employeeRepository = employeeRepository;
-        this.objectMapper = objectMapper;
-    }
-
     @Override
     public byte[] generateVerificationReport(String verificationId, Long verifierId) {
         VerificationRecord record = recordRepository.findByVerificationIdIgnoreCase(verificationId)

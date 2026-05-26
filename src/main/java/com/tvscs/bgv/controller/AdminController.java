@@ -26,10 +26,6 @@ public class AdminController {
 
     private final AdminService adminService;
 
-    public AdminController(AdminService adminService) {
-        this.adminService = adminService;
-    }
-
     @GetMapping("/dashboard")
     @Operation(summary = "Get dashboard statistics")
     public ResponseEntity<DashboardStatsResponse> getDashboard() {

@@ -29,10 +29,6 @@ public class VerifierAuthController {
 
     private final VerifierAuthService verifierAuthService;
 
-    public VerifierAuthController(VerifierAuthService verifierAuthService) {
-        this.verifierAuthService = verifierAuthService;
-    }
-
     @PostMapping("/register")
     @Operation(summary = "Register a new verifier company")
     public ResponseEntity<VerifierProfileResponse> register(@Valid @RequestBody RegisterVerifierRequest req) {
