@@ -11,4 +11,7 @@ public class ValidateEmployeeRequest {
 
     @NotBlank(message = "Name is required")
     private String name;
+
+    // Optional — when provided, the employee's business/entity must also match
+    private String entityName;
 }

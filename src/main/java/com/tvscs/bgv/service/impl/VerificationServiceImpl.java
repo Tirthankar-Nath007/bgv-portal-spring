@@ -49,7 +49,7 @@ public class VerificationServiceImpl implements VerificationService {
     private final AppProperties appProperties;
 
     @Override
-    @Transactional
+    @Transactional(noRollbackFor = BlockedException.class)
     public ValidateEmployeeResponse validateEmployee(Long verifierId, ValidateEmployeeRequest req) {
         String normalizedEmpId = req.getEmployeeId().trim().toUpperCase();
 
@@ -83,6 +83,32 @@ public class VerificationServiceImpl implements VerificationService {
                     .employeeId(normalizedEmpId)
                     .message("Employee not found or name mismatch. " + remaining + " attempt(s) remaining.")
                     .build();
+        }
+
+        // Entity name check — if the caller supplied one, it must match the employee's business field
+        String requestedEntity = req.getEntityName();
+        if (requestedEntity != null && !requestedEntity.isBlank()) {
+            String employeeBusiness = employee.getBusiness();
+            boolean entityMatch = employeeBusiness != null &&
+                    requestedEntity.trim().equalsIgnoreCase(employeeBusiness.trim());
+            if (!entityMatch) {
+                attempt = incrementAttempt(verifierId, normalizedEmpId, attempt);
+                if (attempt.isBlocked()) {
+                    Verifier verifier = verifierRepository.findById(verifierId).orElse(null);
+                    try {
+                        emailService.sendBlockNotification(verifier, normalizedEmpId, attempt.getAttemptCount());
+                    } catch (Exception e) {
+                        log.error("Block notification email failed: {}", e.getMessage());
+                    }
+                    throw new BlockedException(getBlockedMessage());
+                }
+                int remaining = appProperties.getVerificationMaxAttempts() - attempt.getAttemptCount();
+                return ValidateEmployeeResponse.builder()
+                        .found(false)
+                        .employeeId(normalizedEmpId)
+                        .message("Employee verification failed. Invalid Credentials. " + remaining + " attempt(s) remaining.")
+                        .build();
+            }
         }
 
         // Success — reset attempts

@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class VerifierAuthServiceImpl implements VerifierAuthService {
 
-    private static final String DUMMY_OTP = "12345";
+    private static final String DUMMY_OTP = "123456";
 
     private final VerifierRepository verifierRepository;
     private final JwtService jwtService;
