@@ -25,8 +25,13 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void sendAppealNotification(Appeal appeal, Verifier verifier) {
+        log.info("[Email] sendAppealNotification triggered: appealId={}, employeeId={}",
+                appeal.getAppealId(), appeal.getEmployeeId());
         String to = getAdminRecipients();
-        if (to == null) return;
+        if (to == null) {
+            log.warn("[Email] sendAppealNotification skipped: no admin recipients configured");
+            return;
+        }
 
         String subject = "New Query Submitted - Employee " + appeal.getEmployeeId();
         String html = """
@@ -73,8 +78,13 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void sendBlockNotification(Verifier verifier, String employeeId, int attemptCount) {
+        log.info("[Email] sendBlockNotification triggered: verifier={}, employeeId={}, attempts={}",
+                verifier != null ? verifier.getEmail() : "unknown", employeeId, attemptCount);
         String to = getAdminRecipients();
-        if (to == null) return;
+        if (to == null) {
+            log.warn("[Email] sendBlockNotification skipped: no admin recipients configured");
+            return;
+        }
 
         String subject = "Verifier Blocked - " + (verifier != null ? verifier.getCompanyName() : "Unknown");
         String html = """
@@ -115,6 +125,8 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void sendAppealResponse(Appeal appeal, String verifierEmail) {
+        log.info("[Email] sendAppealResponse triggered: appealId={}, verifierEmail={}",
+                appeal.getAppealId(), verifierEmail);
         String subject = "Response to Your Query - Employee " + appeal.getEmployeeId();
         String html = """
                 <!DOCTYPE html><html><head><meta charset="utf-8">

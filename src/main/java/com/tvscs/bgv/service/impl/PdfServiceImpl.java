@@ -109,10 +109,10 @@ public class PdfServiceImpl implements PdfService {
 
         // Comparison table
         doc.add(sectionTitle("Field-by-Field Comparison"));
-        PdfPTable compTable = new PdfPTable(4);
+        PdfPTable compTable = new PdfPTable(3);
         compTable.setWidthPercentage(100);
-        compTable.setWidths(new float[]{2f, 2.5f, 2.5f, 1.5f});
-        addTableHeader(compTable, new String[]{"Field", "Submitted Value", "Official Record", "Result"});
+        compTable.setWidths(new float[]{2.5f, 4f, 1.5f});
+        addTableHeader(compTable, new String[]{"Field", "Submitted Value", "Result"});
 
         int i = 0;
         for (ComparisonResultDto r : results) {
@@ -126,11 +126,11 @@ public class PdfServiceImpl implements PdfService {
         // Summary
         doc.add(sectionTitle("Verification Summary"));
         String statusLabel = switch (record.getOverallStatus()) {
-            case "matched" -> "PERFECT MATCH";
-            case "partial_match" -> "PARTIAL MATCH";
+            case "MATCH" -> "PERFECT MATCH";
+            case "PARTIAL_MATCH" -> "PARTIAL MATCH";
             default -> "SIGNIFICANT MISMATCH";
         };
-        Color statusColor = "matched".equals(record.getOverallStatus()) ? MATCH_COLOR : MISMATCH_COLOR;
+        Color statusColor = "MATCH".equals(record.getOverallStatus()) ? MATCH_COLOR : MISMATCH_COLOR;
         Paragraph summary = new Paragraph();
         summary.add(new Chunk("Overall Status: ", BODY_BOLD));
         Font statusFont = new Font(Font.HELVETICA, 12, Font.BOLD, statusColor);
@@ -187,7 +187,7 @@ public class PdfServiceImpl implements PdfService {
         String resultLabel = r.isMatch() ? "✓ Match" : "✗ Mismatch";
         if ("not_provided".equals(r.getMatchType())) resultLabel = "Not Provided";
 
-        for (String val : new String[]{fieldLabel, nullSafe(r.getVerifierValue()), nullSafe(r.getCompanyValue())}) {
+        for (String val : new String[]{fieldLabel, nullSafe(r.getVerifierValue())}) {
             PdfPCell cell = new PdfPCell(new Phrase(val, BODY_FONT));
             cell.setBackgroundColor(bg);
             cell.setPadding(5);
