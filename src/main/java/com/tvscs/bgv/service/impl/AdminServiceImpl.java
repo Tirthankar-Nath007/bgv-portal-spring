@@ -112,6 +112,16 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public void unblockAttempt(Long attemptId) {
+        VerificationAttempt attempt = verificationAttemptRepository.findById(attemptId)
+                .orElseThrow(() -> new ResourceNotFoundException("Attempt record not found: " + attemptId));
+        attempt.setBlocked(false);
+        attempt.setAttemptCount(0);
+        attempt.setBlockedAt(null);
+        verificationAttemptRepository.save(attempt);
+    }
+
+    @Override
     public List<Map<String, Object>> getBlockedVerifiers() {
         List<VerificationAttempt> blocked = verificationAttemptRepository.findAllBlocked();
         return blocked.stream().map(va -> {
@@ -133,8 +143,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Page<AccessLogResponse> getAccessLogs(String status, String role, Pageable pageable) {
-        return accessLogService.getLogs(status, role, pageable).map(this::toLogResponse);
+    public Page<AccessLogResponse> getAccessLogs(String status, String role, String email, Pageable pageable) {
+        return accessLogService.getLogs(status, role, email, pageable).map(this::toLogResponse);
     }
 
     @Override
@@ -203,6 +213,7 @@ public class AdminServiceImpl implements AdminService {
                 .ipAddress(log.getIpAddress())
                 .userAgent(log.getUserAgent())
                 .failureReason(log.getFailureReason())
+                .metadata(log.getMetadata())
                 .timestamp(log.getTimestamp())
                 .build();
     }

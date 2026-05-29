@@ -9,5 +9,5 @@ public interface AccessLogService {
     void log(String email, String role, String action, String status,
              String failureReason, HttpServletRequest request);
 
-    Page<AccessLog> getLogs(String status, String role, Pageable pageable);
+    Page<AccessLog> getLogs(String status, String role, String email, Pageable pageable);
 }

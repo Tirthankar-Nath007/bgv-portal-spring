@@ -50,15 +50,23 @@ public class AdminController {
         return ResponseEntity.ok(adminService.getBlockedVerifiers());
     }
 
+    @DeleteMapping("/blocked/{attemptId}")
+    @Operation(summary = "Unblock a verifier's blocked attempt record")
+    public ResponseEntity<Void> unblockAttempt(@PathVariable Long attemptId) {
+        adminService.unblockAttempt(attemptId);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/logs")
     @Operation(summary = "Get access logs with optional filters")
     public ResponseEntity<Page<AccessLogResponse>> getLogs(
             @RequestParam(defaultValue = "") String status,
             @RequestParam(defaultValue = "") String role,
+            @RequestParam(defaultValue = "") String email,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(adminService.getAccessLogs(status, role, pageable));
+        return ResponseEntity.ok(adminService.getAccessLogs(status, role, email, pageable));
     }
 
     @GetMapping("/export")

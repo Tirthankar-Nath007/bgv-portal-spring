@@ -37,10 +37,11 @@ public class AccessLogServiceImpl implements AccessLogService {
     }
 
     @Override
-    public Page<AccessLog> getLogs(String status, String role, Pageable pageable) {
+    public Page<AccessLog> getLogs(String status, String role, String email, Pageable pageable) {
         String s = (status != null && !status.isBlank() && !"ALL".equalsIgnoreCase(status)) ? status : null;
         String r = (role != null && !role.isBlank() && !"ALL".equalsIgnoreCase(role)) ? role : null;
-        return accessLogRepository.findByFilters(s, r, pageable);
+        String e = (email != null && !email.isBlank()) ? email.trim() : null;
+        return accessLogRepository.findByFilters(s, r, e, pageable);
     }
 
     private String getClientIp(HttpServletRequest request) {

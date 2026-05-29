@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface AccessLogRepository extends JpaRepository<AccessLog, Long> {
 
-    @Query("SELECT a FROM AccessLog a WHERE (:status IS NULL OR a.status = :status) AND (:role IS NULL OR a.role = :role) ORDER BY a.timestamp DESC")
-    Page<AccessLog> findByFilters(String status, String role, Pageable pageable);
+    @Query("SELECT a FROM AccessLog a WHERE (:status IS NULL OR a.status = :status) AND (:role IS NULL OR a.role = :role) AND (:email IS NULL OR LOWER(a.email) LIKE LOWER(CONCAT('%', :email, '%'))) ORDER BY a.timestamp DESC")
+    Page<AccessLog> findByFilters(String status, String role, String email, Pageable pageable);
 }

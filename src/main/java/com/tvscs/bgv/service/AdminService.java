@@ -14,6 +14,7 @@ public interface AdminService {
     List<VerifierProfileResponse> getAllVerifiers();
     VerifierProfileResponse toggleVerifier(Long verifierId);
     List<Map<String, Object>> getBlockedVerifiers();
-    Page<AccessLogResponse> getAccessLogs(String status, String role, Pageable pageable);
+    void unblockAttempt(Long attemptId);
+    Page<AccessLogResponse> getAccessLogs(String status, String role, String email, Pageable pageable);
     byte[] exportVerificationsAsExcel();
 }

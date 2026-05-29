@@ -16,5 +16,6 @@ public class AccessLogResponse {
     private String ipAddress;
     private String userAgent;
     private String failureReason;
+    private String metadata;
     private LocalDateTime timestamp;
 }
